@@ -81,8 +81,8 @@ object CardioDataAnalysis {
     //------------
 
     //-------------Drop weight and height
-    val reducedWeightAndHeight = dFWithBMI.drop("weight", "height")
-    reducedWeightAndHeight.coalesce(1).write.mode(SaveMode.Overwrite).option("header", "true").csv(outputDirs + "/reducedWeightAndHeight")
+    val finalData = dFWithBMI.drop("weight", "height")
+    finalData.coalesce(1).write.mode(SaveMode.Overwrite).option("header", "true").csv(outputDirs + "/finalDataProcessedData")
 
     //    val reducedWeightAndHeight = dFWithBMI.filter(dFWithBMI("bmi") > 10 && dFWithBMI("bmi") < 100).count()
     //    printf("filteredFromBmi: %s", filteredFromBmi)
