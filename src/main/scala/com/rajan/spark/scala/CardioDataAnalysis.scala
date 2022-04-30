@@ -51,16 +51,23 @@ object CardioDataAnalysis {
     // Dropped duplicated records
     val cleanedDF = DF.dropDuplicates();
 
-    val dFWithBMI = cleanedDF.withColumn("bmi", (col("weight") / (col("height") * col("height") / 10000)).cast(DecimalType(26, 1)));
+    val dFWithBMI = cleanedDF
+      .withColumn("bmi", (col("weight") / (col("height") * col("height") / 10000))
+        .cast(DecimalType(26, 1)));
     dFWithBMI.show();
     dFWithBMI.coalesce(1).write.mode(SaveMode.Overwrite).option("header", "true").csv(outputDirs + "/dataWithBMI")
 
     //------------
     // Group users by age group who has suffered from cardio disease
-    val groupedByAgeGroup = DF.groupBy("age").sum("cardio").withColumnRenamed("age", "years").withColumnRenamed("sum(cardio)", "count")
-    //    groupedByAgeGroup.show();
+    val groupedByAgeGroup = DF.groupBy("age")
+      .sum("cardio")
+      .withColumnRenamed("age", "years")
+      .withColumnRenamed("sum(cardio)", "count")
+    // groupedByAgeGroup.show();
 
-    groupedByAgeGroup.coalesce(1).write.mode(SaveMode.Overwrite).option("header", "true").csv(outputDirs + "/age_grouped_count")
+    groupedByAgeGroup.coalesce(1).write.mode(SaveMode.Overwrite)
+      .option("header", "true")
+      .csv(outputDirs + "/age_grouped_count")
     //------------
 
     //------------
@@ -107,19 +114,6 @@ object CardioDataAnalysis {
     //        df("gender") === 1 &&
     //        df("cardio") === 1
     //    ).count()
-
-    //    val totalPercentage = (filteredData / totalDataCount);
-    //
-    //    println()
-    //    printf("Total records: %s", totalDataCount)
-    //    println()
-    //    printf("Total filtered records: %s", filteredData)
-    //    println()
-    //    printf("Total percentage: %s", totalPercentage)
-    //    println()
-    //    print(grouped)
-
-    //  df.show()
 
   }
 }
