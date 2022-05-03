@@ -2,4 +2,4 @@
 
 Data Visualization and Predictive analysis for Cardiovascular disease
 
-### Data Processing using Spark using Scala
+### Data Processing using Spark in Scala language
